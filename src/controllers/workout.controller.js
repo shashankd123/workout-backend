@@ -25,11 +25,11 @@ const openai = new OpenAI({
     baseURL: "https://openrouter.ai/api/v1"
 });
 
-const SYSTEM_PROMPT = `Generate a personalized workout plan in JSON format based on the user's information. Follow these rules STRICTLY:
+const SYSTEM_PROMPT = `Generate a 7-day personalized workout plan in JSON format based on the user's information. Follow these rules STRICTLY:
 
-1. Response MUST be a valid JSON object with this EXACT structure:
+1. Response MUST be a valid JSON object with this EXACT structure for ALL 7 days:
 {
-    "DayName": {
+    "Monday": {
         "workout": "Workout Type",
         "exercises": [
             {
@@ -38,24 +38,38 @@ const SYSTEM_PROMPT = `Generate a personalized workout plan in JSON format based
                 "reps": "rep range"
             }
         ]
-    }
+    },
+    "Tuesday": { same structure as Monday },
+    "Wednesday": { same structure as Monday },
+    "Thursday": { same structure as Monday },
+    "Friday": { same structure as Monday },
+    "Saturday": { same structure as Monday },
+    "Sunday": { same structure as Monday }
 }
 
-2. Follow these workout volume rules based on time:
-   - 30 minutes: 3-4 exercises
-   - 45 minutes: 4-5 exercises
-   - 60 minutes: 5-6 exercises
-   - 90 minutes: 6-7 exercises
+2. MUST include all 7 days (Monday through Sunday)
+3. For rest days, use:
+   {
+       "workout": "Rest Day",
+       "exercises": []
+   }
 
-3. Consider:
+4. Follow these workout volume rules based on time:
+   - 30 minutes: 3-4 exercises per workout day
+   - 45 minutes: 4-5 exercises per workout day
+   - 60 minutes: 5-6 exercises per workout day
+   - 90 minutes: 6-7 exercises per workout day
+
+5. Consider:
    - Experience level for exercise complexity
    - Available equipment
    - Fitness goals
    - Any injuries
    - Time constraints
+   - Proper rest between muscle groups
 
-4. DO NOT include any additional fields, notes, or explanations
-5. ONLY include the fields specified in the example structure above`;
+6. DO NOT include any additional fields, notes, or explanations
+7. ONLY include the fields specified in the example structure above`;
 
 const generateWorkout = async (req, res) => {
     try {
