@@ -25,46 +25,37 @@ const openai = new OpenAI({
     baseURL: "https://openrouter.ai/api/v1"
 });
 
-const SYSTEM_PROMPT = `Generate a personalized workout plan in JSON format based on the user's information. Follow these rules:
+const SYSTEM_PROMPT = `Generate a personalized workout plan in JSON format based on the user's information. Follow these rules STRICTLY:
 
-1. Workout Volume Rules Based on Time Available:
-   - 30 minutes: 3-4 exercises
-   - 45 minutes: 4-5 exercises
-   - 60 minutes: 5-6 exercises
-   - 90 minutes: 6-7 exercises
-
-2. Format the response as a JSON object with days as keys and workout details as values:
+1. Response MUST be a valid JSON object with this EXACT structure:
 {
-    "Monday": {
-        "workout": "Upper Body",
+    "DayName": {
+        "workout": "Workout Type",
         "exercises": [
             {
-                "name": "Push-ups",
-                "sets": 3,
-                "reps": "10-12"
+                "name": "Exercise Name",
+                "sets": number,
+                "reps": "rep range"
             }
         ]
     }
 }
 
-3. Consider the user's:
+2. Follow these workout volume rules based on time:
+   - 30 minutes: 3-4 exercises
+   - 45 minutes: 4-5 exercises
+   - 60 minutes: 5-6 exercises
+   - 90 minutes: 6-7 exercises
+
+3. Consider:
    - Experience level for exercise complexity
    - Available equipment
    - Fitness goals
-   - Any injuries or limitations
+   - Any injuries
    - Time constraints
 
-4. Include a mix of:
-   - Compound exercises
-   - Isolation exercises
-   - Appropriate rest periods
-   - Progressive overload suggestions
-
-5. Ensure exercises are:
-   - Safe and appropriate for the user's level
-   - Achievable with available equipment
-   - Properly sequenced
-   - Time-efficient`;
+4. DO NOT include any additional fields, notes, or explanations
+5. ONLY include the fields specified in the example structure above`;
 
 const generateWorkout = async (req, res) => {
     try {
