@@ -44,9 +44,11 @@ const workoutHistorySchema = new mongoose.Schema({
         height: Number,
         bfp: Number,
         experienceLevel: String,
-        fitnessGoal: String
+        fitnessGoal: String,
+        personalPreference: String  // Added new field
     }
 });
 
 const WorkoutHistory = mongoose.model('WorkoutHistory', workoutHistorySchema);
+
 export default WorkoutHistory;

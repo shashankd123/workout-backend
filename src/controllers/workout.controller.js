@@ -67,6 +67,8 @@ const SYSTEM_PROMPT = `Generate a 7-day personalized workout plan in JSON format
    - Any injuries
    - Time constraints
    - Proper rest between muscle groups
+   - Personal preferences and specific requirements
+   - Adapt exercises based on individual preferences while maintaining effectiveness
 
 6. DO NOT include any additional fields, notes, or explanations
 7. ONLY include the fields specified in the example structure above`;
@@ -86,7 +88,8 @@ const generateWorkout = async (req, res) => {
             timeAvailable,
             bodyFatPercentage,
             workoutType,
-            injuries
+            injuries,
+            personalPreference
         } = req.body;
 
         // Validate required fields
@@ -108,7 +111,8 @@ const generateWorkout = async (req, res) => {
             equipmentAccess,
             injuries,
             workoutType,
-            timeAvailable
+            timeAvailable,
+            personalPreference
         };
 
         // Update or create user profile
@@ -130,7 +134,8 @@ ${bodyFatPercentage ? `- Body Fat Percentage: ${bodyFatPercentage}%` : ''}
 ${workoutType ? `- Workout Type: ${workoutType}` : ''}
 - Equipment Access: ${equipmentAccess}
 ${injuries ? `- Injuries: ${injuries}` : ''}
-- Time Available: ${timeAvailable}`;
+- Time Available: ${timeAvailable}
+${personalPreference ? `- Personal Preference: ${personalPreference}` : ''}`;
 
         console.log("Generating workout plan...");
 
@@ -166,7 +171,8 @@ ${injuries ? `- Injuries: ${injuries}` : ''}
                 height: userProfile.height,
                 bfp: userProfile.bfp,
                 experienceLevel: userProfile.experienceLevel,
-                fitnessGoal: userProfile.fitnessGoal
+                fitnessGoal: userProfile.fitnessGoal,
+                personalPreference: userProfile.personalPreference
             }
         });
 

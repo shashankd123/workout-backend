@@ -12,7 +12,8 @@ const userSchema = new mongoose.Schema({
     },
     gender: {
         type: String,
-        required: true
+        required: true,
+        enum: ['Male', 'Female', 'Other']
     },
     age: {
         type: Number,
@@ -26,30 +27,45 @@ const userSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    bfp: Number,
+    bfp: {
+        type: Number,
+        required: false
+    },
     experienceLevel: {
         type: String,
-        required: true
+        required: true,
+        enum: ['Beginner', 'Intermediate', 'Advanced']
     },
     fitnessGoal: {
         type: String,
-        required: true
+        required: true,
+        enum: ['Weight Loss', 'Muscle Gain', 'Strength', 'Endurance', 'General Fitness', 'Athletic Performance']
     },
     equipmentAccess: {
         type: String,
-        required: true
+        required: true,
+        enum: ['No Equipment', 'Basic Home Gym', 'Full Gym Access']
     },
-    injuries: String,
-    workoutType: String,
+    injuries: {
+        type: String,
+        required: false
+    },
+    workoutType: {
+        type: String,
+        required: false,
+        enum: ['Strength Training', 'Cardio', 'HIIT']
+    },
     timeAvailable: {
         type: String,
-        required: true
+        required: true,
+        enum: ['Less than 30 minutes', '30-45 minutes', '45-60 minutes', '60-90 minutes', 'More than 90 minutes']
     },
-    lastUpdated: {
-        type: Date,
-        default: Date.now
+    personalPreference: {
+        type: String,
+        required: false
     }
 });
 
 const User = mongoose.model('User', userSchema);
+
 export default User;
