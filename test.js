@@ -1,6 +1,9 @@
 import OpenAI from "openai";
 
-const OPENROUTER_API_KEY = "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";
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
+if (!OPENROUTER_API_KEY) {
+  throw new Error('OPENROUTER_API_KEY environment variable is not set');
+}
 const OPENROUTER_BASE_URL = "https://openrouter.ai/api/v1";
 
 const openai = new OpenAI({
